@@ -24,6 +24,7 @@ class SecurityConfig
 
     companion object {
         private const val LOGIN_URL = "/auth/login"
+        private const val SIGNUP_URL = "/auth/signup"
         private const val STATUS_URL = "/status"
         private const val LOCAL_URI = "http://localhost:3000"
     }
@@ -36,7 +37,7 @@ class SecurityConfig
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers(LOGIN_URL, STATUS_URL).permitAll()
+                    .antMatchers(STATUS_URL, LOGIN_URL, SIGNUP_URL).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .exceptionHandling()
