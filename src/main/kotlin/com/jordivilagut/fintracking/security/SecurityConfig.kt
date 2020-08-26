@@ -1,5 +1,6 @@
 package com.jordivilagut.fintracking.security
 
+import com.jordivilagut.fintracking.ApplicationProperties
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,8 +18,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 class SecurityConfig
 
     constructor(
-        @Autowired val userAuthFilter: UserAuthFilter,
-        @Autowired val authEntryPoint: AuthEntryPoint)
+            @Autowired val appProperties: ApplicationProperties,
+            @Autowired val userAuthFilter: UserAuthFilter,
+            @Autowired val authEntryPoint: AuthEntryPoint)
 
     : WebSecurityConfigurerAdapter() {
 
@@ -26,7 +28,6 @@ class SecurityConfig
         private const val LOGIN_URL = "/auth/login"
         private const val SIGNUP_URL = "/auth/signup"
         private const val STATUS_URL = "/status"
-        private const val LOCAL_URI = "http://localhost:3000"
     }
 
     override fun configure(http: HttpSecurity) {
@@ -53,7 +54,7 @@ class SecurityConfig
     fun corsConfigurationSource(): CorsConfigurationSource? {
         val source = UrlBasedCorsConfigurationSource()
         val corsConfiguration = CorsConfiguration().applyPermitDefaultValues()
-        corsConfiguration.allowedOrigins = arrayListOf(LOCAL_URI)
+        corsConfiguration.allowedOrigins = arrayListOf(appProperties.clientUri)
         source.registerCorsConfiguration("/**", corsConfiguration)
         return source
     }
