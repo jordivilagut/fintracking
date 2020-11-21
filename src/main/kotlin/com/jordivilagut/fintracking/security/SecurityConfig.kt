@@ -45,7 +45,7 @@ class SecurityConfig
                     .authenticationEntryPoint(authEntryPoint)
                     .and()
                 .sessionManagement()
-                    .sessionCreationPolicy(STATELESS);
+                    .sessionCreationPolicy(STATELESS)
 
         http.addFilterBefore(userAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
     }

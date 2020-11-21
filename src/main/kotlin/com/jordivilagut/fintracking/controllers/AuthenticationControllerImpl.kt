@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("auth")
 class AuthenticationControllerImpl
 
-        @Autowired
-        constructor(
-                val authService: AuthenticationService)
+    @Autowired
+    constructor(
+            val authService: AuthenticationService)
 
     : AuthenticationController {
 
