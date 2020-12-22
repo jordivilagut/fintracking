@@ -1,6 +1,8 @@
 package com.jordivilagut.fintracking.security
 
 import com.jordivilagut.fintracking.ApplicationProperties
+import com.jordivilagut.fintracking.controllers.paths.NonSecuredPaths.Companion.AUTH
+import com.jordivilagut.fintracking.controllers.paths.NonSecuredPaths.Companion.STATUS
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,12 +26,6 @@ class SecurityConfig
 
     : WebSecurityConfigurerAdapter() {
 
-    companion object {
-        private const val LOGIN_URL = "/auth/login"
-        private const val SIGNUP_URL = "/auth/signup"
-        private const val STATUS_URL = "/status"
-    }
-
     override fun configure(http: HttpSecurity) {
         http
                 .cors()
@@ -38,7 +34,7 @@ class SecurityConfig
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers(STATUS_URL, LOGIN_URL, SIGNUP_URL).permitAll()
+                    .antMatchers(STATUS.get(), AUTH.allChildren()).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .exceptionHandling()
@@ -55,6 +51,7 @@ class SecurityConfig
         val source = UrlBasedCorsConfigurationSource()
         val corsConfiguration = CorsConfiguration().applyPermitDefaultValues()
         corsConfiguration.allowedOrigins = arrayListOf(appProperties.clientUri)
+        corsConfiguration.allowedMethods = arrayListOf("GET", "POST", "PUT", "DELETE")
         source.registerCorsConfiguration("/**", corsConfiguration)
         return source
     }
