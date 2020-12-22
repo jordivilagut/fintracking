@@ -6,5 +6,9 @@ import com.jordivilagut.fintracking.model.User
 
 interface SecuredController {
 
-    fun sayHi(user: User): Response<String>
+    companion object {
+        const val PATH = "hello"
+    }
+
+    fun getSecretMessage(user: User): Response<Any>
 }

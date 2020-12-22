@@ -2,6 +2,7 @@ package com.jordivilagut.fintracking.controllers
 
 import com.jordivilagut.fintracking.adapters.TransactionAdapter
 import com.jordivilagut.fintracking.base.Response
+import com.jordivilagut.fintracking.controllers.TransactionsController.Companion.PATH
 import com.jordivilagut.fintracking.model.Transaction
 import com.jordivilagut.fintracking.model.dto.TransactionDTO
 import com.jordivilagut.fintracking.services.TransactionService
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("transactions")
+@RequestMapping(PATH)
 class TransactionsControllerImpl
 
     @Autowired

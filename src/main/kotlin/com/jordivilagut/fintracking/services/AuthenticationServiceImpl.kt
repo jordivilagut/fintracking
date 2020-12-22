@@ -1,6 +1,7 @@
 package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.exceptions.InvalidUserException
+import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,8 +31,7 @@ class AuthenticationServiceImpl
         return credentialsLogin(UserCredentials(user.email, user.password))
     }
 
-    override fun logout(token: String) {
-        val user = userService.findByToken(token) ?: throw InvalidUserException("User not found.")
+    override fun logout(user: User) {
         userService.revokeToken(user)
     }
 

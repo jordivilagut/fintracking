@@ -1,5 +1,6 @@
 package com.jordivilagut.fintracking.services
 
+import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 
@@ -9,5 +10,5 @@ interface AuthenticationService {
 
     fun register(credentials: UserCredentials): Auth
 
-    fun logout(token: String)
+    fun logout(user: User)
 }
