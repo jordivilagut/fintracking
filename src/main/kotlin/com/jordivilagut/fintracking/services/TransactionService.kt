@@ -2,16 +2,15 @@ package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.base.BaseFilter
 import com.jordivilagut.fintracking.model.Transaction
-import org.bson.types.ObjectId
 import java.util.function.Consumer
 
 interface TransactionService {
 
-    fun get(id: ObjectId): Transaction?
+    fun get(id: String): Transaction?
 
     fun findAll(): List<Transaction>
 
-    fun findByUserId(userId: ObjectId): List<Transaction>
+    fun findByUserId(userId: String): List<Transaction>
 
     fun findByFilter(filter: Filter): List<Transaction>
 

@@ -11,7 +11,7 @@ interface TransactionsController {
         const val PATH = "transactions"
     }
 
-    fun getTransactions(): Response<List<TransactionDTO>>
+    fun getTransactions(user: User): Response<List<TransactionDTO>>
 
     fun addTransaction(user: User, dto: CreateTransactionDTO): Response<Any>
 }

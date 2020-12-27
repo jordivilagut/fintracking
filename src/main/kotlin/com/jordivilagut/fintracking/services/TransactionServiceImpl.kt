@@ -2,7 +2,7 @@ package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.model.Transaction
 import com.jordivilagut.fintracking.repositories.TransactionRepository
-import org.bson.types.ObjectId
+import com.jordivilagut.fintracking.utils.MongoUtils.Companion.toId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -14,16 +14,16 @@ class TransactionServiceImpl
 
     : TransactionService {
 
-    override fun get(id: ObjectId): Transaction? {
-        return transactionRepository.findById(id).orElse(null)
+    override fun get(id: String): Transaction? {
+        return transactionRepository.findById(toId(id)).orElse(null)
     }
 
     override fun findAll(): List<Transaction> {
         return transactionRepository.findAll()
     }
 
-    override fun findByUserId(userId: ObjectId): List<Transaction> {
-        return transactionRepository.findByUserId(userId)
+    override fun findByUserId(userId: String): List<Transaction> {
+        return transactionRepository.findByUserId(toId(userId))
     }
 
     override fun findByFilter(filter: TransactionService.Filter): List<Transaction> {

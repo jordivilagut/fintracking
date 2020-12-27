@@ -26,8 +26,8 @@ class TransactionsControllerImpl
     : TransactionsController {
 
     @GetMapping
-    override fun getTransactions(): Response<List<TransactionDTO>> {
-        val transactions = transactionService.findAll().map { TransactionAdapter.toDTO(it) }
+    override fun getTransactions(@AuthenticationPrincipal user: User): Response<List<TransactionDTO>> {
+        val transactions = transactionService.findByUserId(user.idStr()).map { TransactionAdapter.toDTO(it) }
         return Response(transactions, OK)
     }
 
