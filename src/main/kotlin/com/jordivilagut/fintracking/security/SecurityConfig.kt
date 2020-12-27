@@ -2,6 +2,7 @@ package com.jordivilagut.fintracking.security
 
 import com.jordivilagut.fintracking.ApplicationProperties
 import com.jordivilagut.fintracking.controllers.paths.NonSecuredPaths.Companion.AUTH
+import com.jordivilagut.fintracking.controllers.paths.NonSecuredPaths.Companion.PUBLIC
 import com.jordivilagut.fintracking.controllers.paths.NonSecuredPaths.Companion.STATUS
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -34,7 +35,7 @@ class SecurityConfig
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers(STATUS.get(), AUTH.allChildren()).permitAll()
+                    .antMatchers(STATUS.get(), AUTH.allChildren(), PUBLIC.allChildren()).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .exceptionHandling()

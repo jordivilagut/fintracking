@@ -15,6 +15,8 @@ data class User(
 
 ): UserDetails {
 
+    fun idStr() = id.toString()
+
     override fun getUsername() = email
 
     override fun getPassword() = password

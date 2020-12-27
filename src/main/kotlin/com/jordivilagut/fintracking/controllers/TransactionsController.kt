@@ -1,6 +1,8 @@
 package com.jordivilagut.fintracking.controllers
 
 import com.jordivilagut.fintracking.base.Response
+import com.jordivilagut.fintracking.model.User
+import com.jordivilagut.fintracking.model.dto.CreateTransactionDTO
 import com.jordivilagut.fintracking.model.dto.TransactionDTO
 
 interface TransactionsController {
@@ -11,5 +13,5 @@ interface TransactionsController {
 
     fun getTransactions(): Response<List<TransactionDTO>>
 
-    fun addTransaction(): Response<Any>
+    fun addTransaction(user: User, dto: CreateTransactionDTO): Response<Any>
 }
