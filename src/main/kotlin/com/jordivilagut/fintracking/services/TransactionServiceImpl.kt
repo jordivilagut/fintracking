@@ -4,6 +4,8 @@ import com.jordivilagut.fintracking.model.Transaction
 import com.jordivilagut.fintracking.repositories.TransactionRepository
 import com.jordivilagut.fintracking.utils.MongoUtils.Companion.toId
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Service
 
 @Service
@@ -27,10 +29,22 @@ class TransactionServiceImpl
     }
 
     override fun findByFilter(filter: TransactionService.Filter): List<Transaction> {
-        TODO("Not yet implemented")
+        return transactionRepository.findByQuery(queryFromFilter(filter))
     }
 
     override fun addTransaction(transaction: Transaction): Transaction {
         return transactionRepository.save(transaction)
+    }
+
+    private fun queryFromFilter(filter: TransactionService.Filter): Query {
+
+        val query = Query()
+
+        val userId = filter.userId
+        if (userId != null) {
+            query.addCriteria(Criteria.where("userId").`is`(toId(userId)))
+        }
+
+        return query
     }
 }
