@@ -15,4 +15,6 @@ interface TransactionsController {
     fun getTransactions(user: User, filter: TransactionsFilter): Response<List<TransactionDTO>>
 
     fun addTransaction(user: User, dto: CreateTransactionDTO): Response<Any>
+
+    fun deleteTransaction(user: User, transactionId: String): Response<Any>
 }

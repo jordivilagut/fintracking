@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.OK
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(PATH)
@@ -49,6 +46,15 @@ class TransactionsControllerImpl
         //validateTransactionDTO()
         val transaction = toTransaction(dto, user.idStr())
         transactionService.addTransaction(transaction)
+        return Response(null, NO_CONTENT)
+    }
+
+    @DeleteMapping("{transactionId}")
+    override fun deleteTransaction(
+        @AuthenticationPrincipal user: User,
+        @PathVariable transactionId: String): Response<Any> {
+
+        transactionService.deleteTransaction(transactionId)
         return Response(null, NO_CONTENT)
     }
 }

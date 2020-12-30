@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 
 @Service
 class TransactionServiceImpl
@@ -34,6 +35,11 @@ class TransactionServiceImpl
 
     override fun addTransaction(transaction: Transaction): Transaction {
         return transactionRepository.save(transaction)
+    }
+
+    override fun deleteTransaction(transactionId: String) {
+        val transaction = get(transactionId)?: throw IllegalArgumentException("Transaction not found")
+        return transactionRepository.delete(transaction)
     }
 
     private fun queryFromFilter(filter: TransactionService.Filter): Query {
