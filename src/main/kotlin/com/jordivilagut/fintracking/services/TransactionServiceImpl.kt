@@ -45,6 +45,10 @@ class TransactionServiceImpl
             query.addCriteria(Criteria.where("userId").`is`(toId(userId)))
         }
 
+        query.addCriteria(Criteria.where("date")
+            .gte(filter.from)
+            .lte(filter.to))
+
         return query
     }
 }

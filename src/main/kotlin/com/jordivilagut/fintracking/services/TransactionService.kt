@@ -2,6 +2,7 @@ package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.base.BaseFilter
 import com.jordivilagut.fintracking.model.Transaction
+import java.util.*
 import java.util.function.Consumer
 
 interface TransactionService {
@@ -19,6 +20,8 @@ interface TransactionService {
     class Filter : BaseFilter() {
 
         var userId: String? = null
+        var from: Date = Date()
+        var to: Date = Date()
 
         companion object {
             /** Convenience method to build [Filter] */
