@@ -22,8 +22,12 @@ class TransactionAdapter {
                 id = null,
                 date = Date(), //Use UTC
                 userId = toId(userId),
-                amount = dto.amount,
-                description = dto.description)
+                amount = if (dto.isExpense()) negative(dto.amount) else dto.amount,
+                description = dto.description,
+                operationType = dto.operationType,
+                expenseType = dto.expenseType)
         }
+
+        private fun negative(amount: Double) = 0 - amount
     }
 }

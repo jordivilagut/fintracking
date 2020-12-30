@@ -1,6 +1,12 @@
 package com.jordivilagut.fintracking.model.dto
 
+import com.jordivilagut.fintracking.model.dto.OperationType.EXPENSE
+
 class CreateTransactionDTO(
-    val amount: Number,
+    val amount: Double,
     val description: String,
-    val expenseType: ExpenseType)
+    val expenseType: ExpenseType,
+    val operationType: OperationType) {
+
+    fun isExpense() = operationType == EXPENSE
+}
