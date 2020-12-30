@@ -14,7 +14,8 @@ class TransactionAdapter {
                     id = transaction.id.toString(),
                     date = transaction.date.time,
                     amount = transaction.amount,
-                    description = transaction.description)
+                    description = transaction.description,
+                    expenseType = transaction.expenseType)
         }
 
         fun toTransaction(dto: CreateTransactionDTO, userId: String): Transaction {
