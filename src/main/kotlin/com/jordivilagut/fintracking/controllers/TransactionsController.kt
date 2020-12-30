@@ -4,6 +4,7 @@ import com.jordivilagut.fintracking.base.Response
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.CreateTransactionDTO
 import com.jordivilagut.fintracking.model.dto.TransactionDTO
+import com.jordivilagut.fintracking.model.dto.TransactionsFilter
 
 interface TransactionsController {
 
@@ -11,7 +12,7 @@ interface TransactionsController {
         const val PATH = "transactions"
     }
 
-    fun getTransactions(user: User): Response<List<TransactionDTO>>
+    fun getTransactions(user: User, filter: TransactionsFilter): Response<List<TransactionDTO>>
 
     fun addTransaction(user: User, dto: CreateTransactionDTO): Response<Any>
 }

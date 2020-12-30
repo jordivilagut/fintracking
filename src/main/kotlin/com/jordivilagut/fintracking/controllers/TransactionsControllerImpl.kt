@@ -7,6 +7,7 @@ import com.jordivilagut.fintracking.model.Transaction
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.CreateTransactionDTO
 import com.jordivilagut.fintracking.model.dto.TransactionDTO
+import com.jordivilagut.fintracking.model.dto.TransactionsFilter
 import com.jordivilagut.fintracking.services.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.NO_CONTENT
@@ -25,13 +26,16 @@ class TransactionsControllerImpl
 
     : TransactionsController {
 
-    @GetMapping
-    override fun getTransactions(@AuthenticationPrincipal user: User): Response<List<TransactionDTO>> {
+    @PostMapping
+    override fun getTransactions(
+        @AuthenticationPrincipal user: User,
+        @RequestBody filter: TransactionsFilter): Response<List<TransactionDTO>> {
+
         val transactions = transactionService.findByUserId(user.idStr()).map { TransactionAdapter.toDTO(it) }
         return Response(transactions, OK)
     }
 
-    @PostMapping
+    @PostMapping("add")
     override fun addTransaction(
         @AuthenticationPrincipal user: User,
         @RequestBody dto: CreateTransactionDTO): Response<Any> {
