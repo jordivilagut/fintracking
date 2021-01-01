@@ -3,7 +3,9 @@ package com.jordivilagut.fintracking.services
 import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.repositories.balancestatements.BalanceStatementRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
+@Service
 class FinanceServiceImpl
 
     @Autowired
