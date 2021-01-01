@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(PATH)
 class PublicControllerImpl
 
-@Autowired
-constructor(
-    val transactionService: TransactionService)
+    @Autowired
+    constructor(
+        val transactionService: TransactionService)
 
     : PublicController {
 

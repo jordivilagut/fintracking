@@ -9,8 +9,9 @@ import org.springframework.stereotype.Repository
 @Repository
 class CustomTransactionRepositoryImpl
 
+    @Autowired
     constructor(
-        @Autowired val mongoTemplate: MongoTemplate)
+        val mongoTemplate: MongoTemplate)
 
     : CustomTransactionRepository {
 

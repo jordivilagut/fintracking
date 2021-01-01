@@ -20,10 +20,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class SecurityConfig
 
+    @Autowired
     constructor(
-            @Autowired val appProperties: ApplicationProperties,
-            @Autowired val userAuthFilter: UserAuthFilter,
-            @Autowired val authEntryPoint: AuthEntryPoint)
+            val appProperties: ApplicationProperties,
+            val userAuthFilter: UserAuthFilter,
+            val authEntryPoint: AuthEntryPoint)
 
     : WebSecurityConfigurerAdapter() {
 

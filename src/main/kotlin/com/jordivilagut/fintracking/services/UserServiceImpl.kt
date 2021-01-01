@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service
 @Service
 class UserServiceImpl
 
+    @Autowired
     constructor(
-            @Autowired val userRepository: UserRepository)
+            val userRepository: UserRepository)
 
     : UserService  {
 

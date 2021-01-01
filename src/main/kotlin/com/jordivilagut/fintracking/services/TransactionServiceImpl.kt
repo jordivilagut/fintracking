@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service
 @Service
 class TransactionServiceImpl
 
+    @Autowired
     constructor(
-        @Autowired val transactionRepository: TransactionRepository)
+        val transactionRepository: TransactionRepository)
 
     : TransactionService {
 

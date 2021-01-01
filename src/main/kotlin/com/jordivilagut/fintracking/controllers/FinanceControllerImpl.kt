@@ -2,16 +2,21 @@ package com.jordivilagut.fintracking.controllers
 
 import com.jordivilagut.fintracking.base.Response
 import com.jordivilagut.fintracking.controllers.FinanceController.Companion.PATH
+import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
+import com.jordivilagut.fintracking.services.FinanceService
 import com.jordivilagut.fintracking.services.TransactionService
 import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RestController
 @RequestMapping(PATH)
@@ -19,7 +24,8 @@ class FinanceControllerImpl
 
     @Autowired
     constructor(
-        val transactionService: TransactionService)
+        val transactionService: TransactionService,
+        val financeService: FinanceService)
 
     : FinanceController {
 
@@ -40,5 +46,19 @@ class FinanceControllerImpl
         val summary = MonthlySummary(income, expenses, income - expenses)
 
         return Response(summary, HttpStatus.OK)
+    }
+
+    override fun getLatestBalanceStatement(
+        @AuthenticationPrincipal user: User): BalanceStatement? {
+        return financeService.getLatestStatement(user.idStr())
+    }
+
+    override fun setLatestBalanceStatement(
+        @AuthenticationPrincipal user: User,
+        @RequestBody balance: Double): Response<Any> {
+
+        val balance = BalanceStatement(null, user.id!!, Date(), balance)
+        financeService.addLatestBalanceStatement(balance)
+        return Response(null, NO_CONTENT)
     }
 }

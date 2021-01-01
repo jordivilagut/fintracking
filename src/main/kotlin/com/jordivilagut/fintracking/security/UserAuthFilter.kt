@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class UserAuthFilter
 
+    @Autowired
     constructor(
-        @Autowired val tokenService: TokenService,
-        @Autowired val userService: UserService)
+        val tokenService: TokenService,
+        val userService: UserService)
 
     : OncePerRequestFilter() {
 

@@ -15,8 +15,9 @@ import org.springframework.stereotype.Repository
 @Repository
 class CustomBalanceStatementRepositoryImpl
 
+    @Autowired
     constructor(
-        @Autowired val mongoTemplate: MongoTemplate)
+        val mongoTemplate: MongoTemplate)
 
     : CustomBalanceStatementRepository {
 

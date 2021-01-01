@@ -1,6 +1,7 @@
 package com.jordivilagut.fintracking.controllers
 
 import com.jordivilagut.fintracking.base.Response
+import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
 
@@ -11,4 +12,8 @@ interface FinanceController {
     }
 
     fun getMonthlySummary(user: User): Response<MonthlySummary>
+
+    fun getLatestBalanceStatement(user: User): BalanceStatement?
+
+    fun setLatestBalanceStatement(user: User, balance: Double): Response<Any>
 }
