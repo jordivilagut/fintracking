@@ -1,4 +1,4 @@
-package com.jordivilagut.fintracking.repositories
+package com.jordivilagut.fintracking.repositories.transactions
 
 import com.jordivilagut.fintracking.model.Transaction
 import org.springframework.beans.factory.annotation.Autowired

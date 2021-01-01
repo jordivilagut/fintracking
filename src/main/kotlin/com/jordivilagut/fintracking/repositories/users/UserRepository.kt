@@ -1,4 +1,4 @@
-package com.jordivilagut.fintracking.repositories
+package com.jordivilagut.fintracking.repositories.users
 
 import com.jordivilagut.fintracking.model.User
 import org.bson.types.ObjectId

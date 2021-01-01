@@ -5,7 +5,7 @@ import com.jordivilagut.fintracking.exceptions.AlreadyRegisteredException
 import com.jordivilagut.fintracking.exceptions.InvalidUserException
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.UserCredentials
-import com.jordivilagut.fintracking.repositories.UserRepository
+import com.jordivilagut.fintracking.repositories.users.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

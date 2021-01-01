@@ -1,13 +1,13 @@
 package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.model.Transaction
-import com.jordivilagut.fintracking.repositories.TransactionRepository
+import com.jordivilagut.fintracking.repositories.transactions.TransactionRepository
+import com.jordivilagut.fintracking.utils.Fields.Companion.USER_ID
 import com.jordivilagut.fintracking.utils.MongoUtils.Companion.toId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Service
-import java.lang.IllegalArgumentException
 
 @Service
 class TransactionServiceImpl
@@ -48,7 +48,7 @@ class TransactionServiceImpl
 
         val userId = filter.userId
         if (userId != null) {
-            query.addCriteria(Criteria.where("userId").`is`(toId(userId)))
+            query.addCriteria(Criteria.where(USER_ID).`is`(toId(userId)))
         }
 
         query.addCriteria(Criteria.where("date")
