@@ -6,8 +6,6 @@ import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
 import com.jordivilagut.fintracking.services.FinanceService
-import com.jordivilagut.fintracking.services.TransactionService
-import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.NO_CONTENT
@@ -24,7 +22,6 @@ class FinanceControllerImpl
 
     @Autowired
     constructor(
-        val transactionService: TransactionService,
         val financeService: FinanceService)
 
     : FinanceController {
@@ -33,19 +30,16 @@ class FinanceControllerImpl
     override fun getMonthlySummary(
         @AuthenticationPrincipal user: User): Response<MonthlySummary> {
 
-        //TODO - Move to service
-        val filter = TransactionService.Filter.transactionFilter {
-            this.userId = user.idStr()
-            this.from = DateTime().withDayOfMonth(1).withTimeAtStartOfDay().toDate()
-            this.to = DateTime().withDayOfMonth(1).plusMonths(1).withTimeAtStartOfDay().toDate()
-        }
-
-        val transactions = transactionService.findByFilter(filter)
-        val income = transactions.filter { it.isIncome() }.map { it.amount }.sum()
-        val expenses = -transactions.filter { it.isExpense() }.map { it.amount }.sum()
-        val summary = MonthlySummary(income, expenses, income - expenses)
-
+        val summary = financeService.getMonthlySummary(user.idStr())
         return Response(summary, HttpStatus.OK)
+    }
+
+    @GetMapping("balance")
+    override fun getBalance(
+        @AuthenticationPrincipal user: User): Response<Double?> {
+
+        val balance = financeService.getCurrentFunds(user.idStr())
+        return Response(balance, HttpStatus.OK)
     }
 
     override fun getLatestBalanceStatement(
@@ -57,8 +51,8 @@ class FinanceControllerImpl
         @AuthenticationPrincipal user: User,
         @RequestBody balance: Double): Response<Any> {
 
-        val balance = BalanceStatement(null, user.id!!, Date(), balance)
-        financeService.addLatestBalanceStatement(balance)
+        val balanceStatement = BalanceStatement(null, user.id!!, Date(), balance)
+        financeService.addLatestBalanceStatement(balanceStatement)
         return Response(null, NO_CONTENT)
     }
 }

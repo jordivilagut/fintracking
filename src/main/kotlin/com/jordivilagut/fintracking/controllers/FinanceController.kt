@@ -13,6 +13,8 @@ interface FinanceController {
 
     fun getMonthlySummary(user: User): Response<MonthlySummary>
 
+    fun getBalance(user: User): Response<Double?>
+
     fun getLatestBalanceStatement(user: User): BalanceStatement?
 
     fun setLatestBalanceStatement(user: User, balance: Double): Response<Any>
