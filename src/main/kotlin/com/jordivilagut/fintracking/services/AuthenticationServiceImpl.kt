@@ -5,6 +5,7 @@ import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.bcrypt.BCrypt.checkpw
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,6 +20,7 @@ class AuthenticationServiceImpl
 
     companion object {
         val EMAIL_REGEX = Regex("^(.+)@(.+)$")
+        val PASSWORD_REGEX = Regex("^[a-zA-Z0-9]{8,}$")
     }
 
     override fun login(token: String?, credentials: UserCredentials?): Auth {
@@ -42,7 +44,7 @@ class AuthenticationServiceImpl
 
     private fun credentialsLogin(credentials: UserCredentials): Auth {
         val user = userService.findByEmail(credentials.email)?:     throw InvalidUserException("Invalid email.")
-        if (user.password != credentials.password)                  throw InvalidUserException("Invalid password.")
+        if (!checkpw(credentials.password, user.password))          throw InvalidUserException("Invalid password.")
 
         val token = tokenService.createJWT(user)
         userService.updateToken(user, token)

@@ -6,7 +6,10 @@ import com.jordivilagut.fintracking.exceptions.InvalidUserException
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import com.jordivilagut.fintracking.repositories.users.UserRepository
+import com.jordivilagut.fintracking.services.AuthenticationServiceImpl.Companion.EMAIL_REGEX
+import com.jordivilagut.fintracking.services.AuthenticationServiceImpl.Companion.PASSWORD_REGEX
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.bcrypt.BCrypt
 import org.springframework.stereotype.Service
 
 @Service
@@ -36,10 +39,11 @@ class UserServiceImpl
 
         if (email.isBlank() || password.isBlank())                  throw InvalidUserException("Empty username or password.")
         if (findByEmail(email) != null)                             throw AlreadyRegisteredException("Username already registered.")
-        if (password.length < 4)                                    throw InvalidUserException("Password is too short.")
-        if (!email.matches(AuthenticationServiceImpl.EMAIL_REGEX))  throw InvalidUserException("Invalid email.")
+        if (!password.matches(PASSWORD_REGEX))                      throw InvalidUserException("Password is too short.")
+        if (!email.matches(EMAIL_REGEX))                            throw InvalidUserException("Invalid email.")
 
-        val user = toUser(email, password)
+        val encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
+        val user = toUser(email, encryptedPassword)
         return userRepository.save(user)
     }
 
