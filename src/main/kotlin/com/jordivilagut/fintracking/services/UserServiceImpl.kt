@@ -4,7 +4,7 @@ import com.jordivilagut.fintracking.adapters.UserAdapter.Companion.toUser
 import com.jordivilagut.fintracking.exceptions.AlreadyRegisteredException
 import com.jordivilagut.fintracking.exceptions.InvalidUserException
 import com.jordivilagut.fintracking.model.User
-import com.jordivilagut.fintracking.model.dto.UserCredentials
+import com.jordivilagut.fintracking.model.dto.CreateUser
 import com.jordivilagut.fintracking.repositories.users.UserRepository
 import com.jordivilagut.fintracking.services.AuthenticationServiceImpl.Companion.EMAIL_REGEX
 import com.jordivilagut.fintracking.services.AuthenticationServiceImpl.Companion.PASSWORD_REGEX
@@ -33,17 +33,18 @@ class UserServiceImpl
         TODO("Not yet implemented")
     }
 
-    override fun createUser(credentials: UserCredentials): User {
+    override fun createUser(credentials: CreateUser): User {
+        val name = credentials.name
         val email = credentials.email
         val password = credentials.password
 
         if (email.isBlank() || password.isBlank())                  throw InvalidUserException("Empty username or password.")
         if (findByEmail(email) != null)                             throw AlreadyRegisteredException("Username already registered.")
-        if (!password.matches(PASSWORD_REGEX))                      throw InvalidUserException("Password is too short.")
+        if (!password.matches(PASSWORD_REGEX))                      throw InvalidUserException("Invalid password.")
         if (!email.matches(EMAIL_REGEX))                            throw InvalidUserException("Invalid email.")
 
         val encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
-        val user = toUser(email, encryptedPassword)
+        val user = toUser(name, email, encryptedPassword)
         return userRepository.save(user)
     }
 

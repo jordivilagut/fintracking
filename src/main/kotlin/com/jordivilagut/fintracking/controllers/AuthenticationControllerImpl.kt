@@ -6,6 +6,7 @@ import com.jordivilagut.fintracking.base.ResponseMapper.Companion.error
 import com.jordivilagut.fintracking.controllers.AuthenticationController.Companion.PATH
 import com.jordivilagut.fintracking.exceptions.ApiException
 import com.jordivilagut.fintracking.model.User
+import com.jordivilagut.fintracking.model.dto.CreateUser
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import com.jordivilagut.fintracking.services.AuthenticationService
 import com.jordivilagut.fintracking.utils.Headers.Companion.AUTH_TOKEN
@@ -40,7 +41,7 @@ class AuthenticationControllerImpl
 
     @PostMapping("/signup")
     override fun signup(
-        @RequestBody credentials: UserCredentials): Response<Any> {
+        @RequestBody credentials: CreateUser): Response<Any> {
 
         return try {
             val auth = authService.register(credentials)

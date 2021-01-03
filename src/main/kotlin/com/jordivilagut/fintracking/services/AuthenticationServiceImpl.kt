@@ -3,6 +3,7 @@ package com.jordivilagut.fintracking.services
 import com.jordivilagut.fintracking.exceptions.InvalidUserException
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
+import com.jordivilagut.fintracking.model.dto.CreateUser
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCrypt.checkpw
@@ -28,9 +29,9 @@ class AuthenticationServiceImpl
                 else credentialsLogin(credentials!!)
     }
 
-    override fun register(credentials: UserCredentials): Auth {
+    override fun register(credentials: CreateUser): Auth {
         val user = userService.createUser(credentials)
-        return credentialsLogin(UserCredentials(user.email, user.password))
+        return refreshToken(user)
     }
 
     override fun logout(user: User) {
@@ -39,16 +40,19 @@ class AuthenticationServiceImpl
 
     private fun autoLogin(token: String): Auth {
         val user = userService.findByToken(token) ?: throw InvalidUserException("User not found.")
-        return Auth(user.email, user.token!!)
+        return Auth(user.name, user.email, user.token!!)
     }
 
     private fun credentialsLogin(credentials: UserCredentials): Auth {
         val user = userService.findByEmail(credentials.email)?:     throw InvalidUserException("Invalid email.")
         if (!checkpw(credentials.password, user.password))          throw InvalidUserException("Invalid password.")
+        return refreshToken(user)
+    }
 
+    private fun refreshToken(user: User): Auth {
         val token = tokenService.createJWT(user)
         userService.updateToken(user, token)
 
-        return Auth(user.email, user.token!!)
+        return Auth(user.name, user.email, user.token!!)
     }
 }

@@ -2,7 +2,7 @@ package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.base.BaseFilter
 import com.jordivilagut.fintracking.model.User
-import com.jordivilagut.fintracking.model.dto.UserCredentials
+import com.jordivilagut.fintracking.model.dto.CreateUser
 import java.util.function.Consumer
 
 interface UserService {
@@ -13,7 +13,7 @@ interface UserService {
 
     fun findByFilter(filter: Filter): List<User>
 
-    fun createUser(credentials: UserCredentials): User
+    fun createUser(credentials: CreateUser): User
 
     fun updateToken(user: User, token: String?)
 
