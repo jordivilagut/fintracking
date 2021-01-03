@@ -12,4 +12,6 @@ interface AuthenticationService {
     fun register(credentials: CreateUser): Auth
 
     fun logout(user: User)
+
+    fun sendForgotPasswordEmail(email: String)
 }

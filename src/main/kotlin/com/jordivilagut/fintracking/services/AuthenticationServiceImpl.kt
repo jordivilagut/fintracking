@@ -15,7 +15,8 @@ class AuthenticationServiceImpl
     @Autowired
     constructor(
             val userService: UserService,
-            val tokenService: TokenService)
+            val tokenService: TokenService,
+            val emailService: EmailService)
 
     : AuthenticationService {
 
@@ -36,6 +37,11 @@ class AuthenticationServiceImpl
 
     override fun logout(user: User) {
         userService.revokeToken(user)
+    }
+
+    override fun sendForgotPasswordEmail(email: String) {
+        val user = userService.findByEmail(email)?: throw InvalidUserException("User not found.")
+        emailService.sendForgotPasswordEmail(user.email)
     }
 
     private fun autoLogin(token: String): Auth {

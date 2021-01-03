@@ -11,6 +11,7 @@ import com.jordivilagut.fintracking.model.dto.UserCredentials
 import com.jordivilagut.fintracking.services.AuthenticationService
 import com.jordivilagut.fintracking.utils.Headers.Companion.AUTH_TOKEN
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.OK
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -46,6 +47,19 @@ class AuthenticationControllerImpl
         return try {
             val auth = authService.register(credentials)
             Response(auth, OK)
+
+        } catch (e: ApiException) {
+            error(e)
+        }
+    }
+
+    @PostMapping("/forgot-pwd")
+    override fun sendForgotPasswordEmail(
+        @RequestBody email: String): Response<Any> {
+
+        return try {
+            authService.sendForgotPasswordEmail(email)
+            Response(null, NO_CONTENT)
 
         } catch (e: ApiException) {
             error(e)

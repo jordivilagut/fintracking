@@ -16,4 +16,6 @@ interface AuthenticationController {
     fun signup(credentials: CreateUser): Response<Any>
 
     fun logout(user: User): Response<Any>
+
+    fun sendForgotPasswordEmail(email: String): Response<Any>
 }
