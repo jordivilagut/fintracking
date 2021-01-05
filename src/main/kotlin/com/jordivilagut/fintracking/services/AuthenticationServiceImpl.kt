@@ -36,7 +36,7 @@ class AuthenticationServiceImpl
     }
 
     override fun logout(user: User) {
-        userService.revokeToken(user)
+        refreshToken(user)
     }
 
     override fun sendForgotPasswordEmail(email: String) {
