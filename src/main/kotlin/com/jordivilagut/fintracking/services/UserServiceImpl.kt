@@ -48,6 +48,12 @@ class UserServiceImpl
         return userRepository.save(user)
     }
 
+    override fun updatePassword(user: User, password: String) {
+        val encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
+        user.password = encryptedPassword
+        userRepository.save(user)
+    }
+
     override fun updateToken(user: User, token: String?) {
         user.token = token
         userRepository.save(user)

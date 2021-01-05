@@ -41,7 +41,7 @@ class AuthenticationServiceImpl
 
     override fun sendForgotPasswordEmail(email: String) {
         val user = userService.findByEmail(email)?: throw InvalidUserException("User not found.")
-        emailService.sendForgotPasswordEmail(user.email)
+        emailService.sendForgotPasswordEmail(user)
     }
 
     private fun autoLogin(token: String): Auth {

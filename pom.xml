@@ -74,6 +74,14 @@
 			<version>0.4</version>
 		</dependency>
 
+		<!-- Emails Api -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+
 		<!-- Kotlin Support -->
 
 		<dependency>

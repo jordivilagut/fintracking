@@ -15,6 +15,8 @@ interface UserService {
 
     fun createUser(credentials: CreateUser): User
 
+    fun updatePassword(user: User, password: String)
+
     fun updateToken(user: User, token: String?)
 
     fun revokeToken(user: User)

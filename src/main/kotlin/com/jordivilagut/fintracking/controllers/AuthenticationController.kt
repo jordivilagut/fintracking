@@ -18,4 +18,6 @@ interface AuthenticationController {
     fun logout(user: User): Response<Any>
 
     fun sendForgotPasswordEmail(email: String): Response<Any>
+
+    fun changePassword(user: User, password: String): Response<Any>
 }

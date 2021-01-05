@@ -9,6 +9,7 @@ import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.CreateUser
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import com.jordivilagut.fintracking.services.AuthenticationService
+import com.jordivilagut.fintracking.services.UserService
 import com.jordivilagut.fintracking.utils.Headers.Companion.AUTH_TOKEN
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.NO_CONTENT
@@ -22,6 +23,7 @@ class AuthenticationControllerImpl
 
     @Autowired
     constructor(
+        val userService: UserService,
         val authService: AuthenticationService)
 
     : AuthenticationController {
@@ -59,6 +61,20 @@ class AuthenticationControllerImpl
 
         return try {
             authService.sendForgotPasswordEmail(email)
+            Response(null, NO_CONTENT)
+
+        } catch (e: ApiException) {
+            error(e)
+        }
+    }
+
+    @PostMapping("/change-pwd")
+    override fun changePassword(
+        @AuthenticationPrincipal user: User,
+        @RequestBody password: String): Response<Any> {
+
+        return try {
+            userService.updatePassword(user, password)
             Response(null, NO_CONTENT)
 
         } catch (e: ApiException) {

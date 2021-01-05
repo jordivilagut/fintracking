@@ -11,12 +11,16 @@ data class User(
         @Id val id: ObjectId?,
         val name: String,
         val email: String,
-        private val password: String,
+        private var password: String,
         var token: String?
 
 ): UserDetails {
 
     fun idStr() = id.toString()
+
+    fun setPassword(password: String) {
+        this.password = password
+    }
 
     override fun getUsername() = email
 
