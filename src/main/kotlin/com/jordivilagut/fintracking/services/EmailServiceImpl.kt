@@ -12,18 +12,16 @@ class EmailServiceImpl
 
     @Autowired
     constructor(
-        val mailSender: JavaMailSender,
-        val tokenService: TokenService)
+        val mailSender: JavaMailSender)
 
     : EmailService {
 
     override fun sendForgotPasswordEmail(user: User) {
-        val userToken = tokenService.createJWT(user)
         val message = SimpleMailMessage()
         message.setFrom("jordi.fintracking@gmail.com")
         message.setTo(user.email)
         message.setSubject("Fintracking: Password Recovery")
-        message.setText("Recover password: https://fintracking.netlify.app/recoverpwd/$userToken")
+        message.setText("Recover password: https://fintracking.netlify.app/recoverpwd/${user.token}")
         mailSender.send(message)
     }
 }
