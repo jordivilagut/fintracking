@@ -18,7 +18,7 @@ class EmailServiceImpl
 
     override fun sendForgotPasswordEmail(user: User) {
         val message = SimpleMailMessage()
-        message.setFrom("jordi.fintracking@gmail.com")
+        message.setFrom("fintrackingteam@gmail.com")
         message.setTo(user.email)
         message.setSubject("Fintracking: Password Recovery")
         message.setText("Recover password: https://fintracking.netlify.app/recoverpwd/${user.token}")

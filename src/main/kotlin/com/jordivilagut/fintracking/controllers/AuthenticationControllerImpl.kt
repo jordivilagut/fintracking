@@ -7,6 +7,7 @@ import com.jordivilagut.fintracking.controllers.AuthenticationController.Compani
 import com.jordivilagut.fintracking.exceptions.ApiException
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.CreateUser
+import com.jordivilagut.fintracking.model.dto.GoogleAuth
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import com.jordivilagut.fintracking.services.AuthenticationService
 import com.jordivilagut.fintracking.services.UserService
@@ -49,6 +50,32 @@ class AuthenticationControllerImpl
         return try {
             val auth = authService.register(credentials)
             Response(auth, OK)
+
+        } catch (e: ApiException) {
+            error(e)
+        }
+    }
+
+    @PostMapping("/glogin")
+    override fun loginWithGoogle(
+        @RequestBody auth: GoogleAuth): Response<Any> {
+
+        return try {
+            //TODO - Verify google user
+            return Response(null, OK)
+
+        } catch (e: ApiException) {
+            error(e)
+        }
+    }
+
+    @PostMapping("/gsingup")
+    override fun signupWithGoogle(
+        @RequestBody auth: GoogleAuth): Response<Any> {
+
+        return try {
+            //TODO - Create google user
+            return Response(null, OK)
 
         } catch (e: ApiException) {
             error(e)
