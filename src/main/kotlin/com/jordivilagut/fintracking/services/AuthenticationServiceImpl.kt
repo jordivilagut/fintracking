@@ -4,7 +4,6 @@ import com.jordivilagut.fintracking.exceptions.InvalidUserException
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
 import com.jordivilagut.fintracking.model.dto.CreateUser
-import com.jordivilagut.fintracking.model.dto.GoogleAuth
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCrypt.checkpw
@@ -37,15 +36,15 @@ class AuthenticationServiceImpl
         return refreshToken(user)
     }
 
-    override fun loginWithGoogle(googleAuth: GoogleAuth): Auth {
-        val payload = googleAuthService.getPayloadFromToken(googleAuth.idToken)
+    override fun loginWithGoogle(idToken: String): Auth {
+        val payload = googleAuthService.getPayloadFromToken(idToken)
         val email = payload.email
         val user = userService.findByEmail(email)?: throw InvalidUserException("Invalid email.")
         return refreshToken(user)
     }
 
-    override fun signupWithGoogle(googleAuth: GoogleAuth): Auth {
-        val payload = googleAuthService.getPayloadFromToken(googleAuth.idToken)
+    override fun signupWithGoogle(idToken: String): Auth {
+        val payload = googleAuthService.getPayloadFromToken(idToken)
         val name = payload["name"] as String
         val email = payload.email
         val password = "fakepwd32" //TODO - do something here

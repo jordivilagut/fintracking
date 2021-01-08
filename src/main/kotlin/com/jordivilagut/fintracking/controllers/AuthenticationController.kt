@@ -3,7 +3,6 @@ package com.jordivilagut.fintracking.controllers
 import com.jordivilagut.fintracking.base.Response
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.CreateUser
-import com.jordivilagut.fintracking.model.dto.GoogleAuth
 import com.jordivilagut.fintracking.model.dto.UserCredentials
 
 interface AuthenticationController {
@@ -16,9 +15,9 @@ interface AuthenticationController {
 
     fun signup(credentials: CreateUser): Response<Any>
 
-    fun loginWithGoogle(googleAuth: GoogleAuth): Response<Any>
+    fun loginWithGoogle(googleIdToken: String): Response<Any>
 
-    fun signupWithGoogle(googleAuth: GoogleAuth): Response<Any>
+    fun signupWithGoogle(googleIdToken: String): Response<Any>
 
     fun logout(user: User): Response<Any>
 
