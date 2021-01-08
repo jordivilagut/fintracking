@@ -74,6 +74,14 @@
 			<version>0.4</version>
 		</dependency>
 
+		<!-- Google Api Client -->
+
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.30.10</version>
+		</dependency>
+
 		<!-- Emails Api -->
 
 		<dependency>

@@ -16,9 +16,9 @@ interface AuthenticationController {
 
     fun signup(credentials: CreateUser): Response<Any>
 
-    fun loginWithGoogle(auth: GoogleAuth): Response<Any>
+    fun loginWithGoogle(googleAuth: GoogleAuth): Response<Any>
 
-    fun signupWithGoogle(auth: GoogleAuth): Response<Any>
+    fun signupWithGoogle(googleAuth: GoogleAuth): Response<Any>
 
     fun logout(user: User): Response<Any>
 

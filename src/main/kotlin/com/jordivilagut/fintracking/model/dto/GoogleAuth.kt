@@ -1,3 +1,3 @@
 package com.jordivilagut.fintracking.model.dto
 
-class GoogleAuth(idToken: String)
+class GoogleAuth(val idToken: String)

@@ -8,4 +8,7 @@ class ApplicationProperties {
 
     @Value("\${client.uri}")
     lateinit var clientUri: String
+
+    @Value("\${google.client.id}")
+    lateinit var googleClientId: String
 }

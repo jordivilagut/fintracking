@@ -58,11 +58,11 @@ class AuthenticationControllerImpl
 
     @PostMapping("/glogin")
     override fun loginWithGoogle(
-        @RequestBody auth: GoogleAuth): Response<Any> {
+        @RequestBody googleAuth: GoogleAuth): Response<Any> {
 
         return try {
-            //TODO - Verify google user
-            return Response(null, OK)
+            val auth = authService.loginWithGoogle(googleAuth)
+            return Response(auth, OK)
 
         } catch (e: ApiException) {
             error(e)
@@ -71,11 +71,11 @@ class AuthenticationControllerImpl
 
     @PostMapping("/gsingup")
     override fun signupWithGoogle(
-        @RequestBody auth: GoogleAuth): Response<Any> {
+        @RequestBody googleAuth: GoogleAuth): Response<Any> {
 
         return try {
-            //TODO - Create google user
-            return Response(null, OK)
+            val auth = authService.signupWithGoogle(googleAuth)
+            return Response(auth, OK)
 
         } catch (e: ApiException) {
             error(e)
