@@ -5,6 +5,8 @@ import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
 import com.jordivilagut.fintracking.model.dto.CreateUser
 import com.jordivilagut.fintracking.model.dto.UserCredentials
+import com.jordivilagut.fintracking.utils.PasswordUtils
+import com.jordivilagut.fintracking.utils.PasswordUtils.Companion.generateRandomPassword
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCrypt.checkpw
 import org.springframework.stereotype.Service
@@ -47,7 +49,7 @@ class AuthenticationServiceImpl
         val payload = googleAuthService.getPayloadFromToken(idToken)
         val name = payload["name"] as String
         val email = payload.email
-        val password = "fakepwd32" //TODO - do something here
+        val password = generateRandomPassword()
         val credentials = CreateUser(name, email, password)
         return register(credentials)
     }

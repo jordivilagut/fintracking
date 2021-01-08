@@ -82,6 +82,14 @@
 			<version>1.30.10</version>
 		</dependency>
 
+		<!-- Apache Commons -->
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.11</version>
+		</dependency>
+
 		<!-- Emails Api -->
 
 		<dependency>
