@@ -61,7 +61,6 @@ class AuthenticationControllerImpl
         @RequestBody googleAuth: GoogleAuth): Response<Any> {
 
         return try {
-            println("glogin called" + googleAuth.idToken)
             val auth = authService.loginWithGoogle(googleAuth)
             return Response(auth, OK)
 
@@ -70,12 +69,11 @@ class AuthenticationControllerImpl
         }
     }
 
-    @PostMapping("/gsingup")
+    @PostMapping("/gsignup")
     override fun signupWithGoogle(
         @RequestBody googleAuth: GoogleAuth): Response<Any> {
 
         return try {
-            println("gsignup called" + googleAuth.idToken)
             val auth = authService.signupWithGoogle(googleAuth)
             return Response(auth, OK)
 
