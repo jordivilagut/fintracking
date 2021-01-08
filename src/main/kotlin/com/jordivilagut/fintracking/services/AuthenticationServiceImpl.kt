@@ -5,7 +5,6 @@ import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.Auth
 import com.jordivilagut.fintracking.model.dto.CreateUser
 import com.jordivilagut.fintracking.model.dto.UserCredentials
-import com.jordivilagut.fintracking.utils.PasswordUtils
 import com.jordivilagut.fintracking.utils.PasswordUtils.Companion.generateRandomPassword
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCrypt.checkpw
