@@ -12,10 +12,7 @@ import com.jordivilagut.fintracking.services.BudgetItemService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(PATH)
@@ -26,6 +23,7 @@ class BudgetControllerImpl
         val budgetItemService: BudgetItemService
     ): BudgetController {
 
+    @PostMapping
     override fun getBudgetItems(
         @AuthenticationPrincipal user: User,
         @RequestBody filter: BudgetItemsFilter): Response<List<BudgetItemDTO>> {
@@ -37,6 +35,7 @@ class BudgetControllerImpl
         return Response(items, HttpStatus.OK)
     }
 
+    @PostMapping("add")
     override fun addBudgetItem(
         @AuthenticationPrincipal user: User,
         @RequestBody dto: CreateBudgetItemDTO): Response<Any> {
@@ -47,6 +46,7 @@ class BudgetControllerImpl
         return Response(null, HttpStatus.NO_CONTENT)
     }
 
+    @DeleteMapping("{itemId}")
     override fun deleteBudgetItem(
         @AuthenticationPrincipal user: User,
         @PathVariable itemId: String): Response<Any> {
