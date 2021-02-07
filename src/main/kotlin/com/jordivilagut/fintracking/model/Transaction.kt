@@ -17,7 +17,10 @@ class Transaction(
         val amount: Double,
         val description: String,
         val expenseType: ExpenseType,
-        val operationType: OperationType) {
+        val operationType: OperationType,
+        val budgetItemId: ObjectId?
+
+) {
 
         fun isExpense() = operationType == EXPENSE
 
