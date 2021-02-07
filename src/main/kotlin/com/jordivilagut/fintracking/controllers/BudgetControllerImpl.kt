@@ -3,7 +3,7 @@ package com.jordivilagut.fintracking.controllers
 import com.jordivilagut.fintracking.adapters.BudgetItemAdapter
 import com.jordivilagut.fintracking.adapters.BudgetItemsFilterAdapter
 import com.jordivilagut.fintracking.base.Response
-import com.jordivilagut.fintracking.controllers.TransactionsController.Companion.PATH
+import com.jordivilagut.fintracking.controllers.BudgetController.Companion.PATH
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.BudgetItemDTO
 import com.jordivilagut.fintracking.model.dto.BudgetItemsFilter
