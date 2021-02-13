@@ -6,7 +6,7 @@ class CreateBudgetItemDTO(
     val amount: Double,
     val description: String,
     val start: Long,
-    val end: Long,
+    val end: Long?,
     val expenseType: ExpenseType,
     val operationType: OperationType,
     val paymentType: PaymentType,

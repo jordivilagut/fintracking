@@ -51,10 +51,8 @@ class BudgetItemServiceImpl
             query.addCriteria(Criteria.where(USER_ID).`is`(toId(userId)))
         }
 
-        query.addCriteria(
-            Criteria.where("date")
-            .gte(filter.from)
-            .lte(filter.to))
+        query.addCriteria(Criteria.where("start").gte(filter.from).lte(filter.to))
+        //query.addCriteria(Criteria.where("end").gte(filter.from).lte(filter.to))
 
         return query
     }

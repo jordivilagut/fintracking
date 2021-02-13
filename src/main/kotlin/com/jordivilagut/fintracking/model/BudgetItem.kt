@@ -14,7 +14,7 @@ class BudgetItem(
     @Id var id: ObjectId?,
     val userId: ObjectId,
     val start: Date,
-    val end: Date,
+    val end: Date?,
     val paymentType: PaymentType,
     val paymentRecurrence: PaymentRecurrence?,
     val amount: Double,

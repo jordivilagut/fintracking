@@ -13,7 +13,7 @@ class BudgetItemAdapter {
             return BudgetItemDTO(
                 id = item.id.toString(),
                 start = item.start.time,
-                end = item.end.time,
+                end = item.end?.time,
                 amount = item.amount,
                 description = item.description,
                 expenseType = item.expenseType,
@@ -25,7 +25,7 @@ class BudgetItemAdapter {
             return BudgetItem(
                 id = null,
                 start = Date(dto.start),
-                end = Date(dto.end),
+                end = if (dto.end != null) Date(dto.end) else null,
                 userId = MongoUtils.toId(userId),
                 amount = if (dto.isExpense()) negative(dto.amount) else dto.amount,
                 description = dto.description,
