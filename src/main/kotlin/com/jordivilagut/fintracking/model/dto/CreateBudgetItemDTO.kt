@@ -10,7 +10,7 @@ class CreateBudgetItemDTO(
     val expenseType: ExpenseType,
     val operationType: OperationType,
     val paymentType: PaymentType,
-    val paymentRecurrence: PaymentRecurrence?
+    val recurrence: PaymentRecurrence?
 
 ) {
 

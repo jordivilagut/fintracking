@@ -16,7 +16,7 @@ class BudgetItem(
     val start: Date,
     val end: Date?,
     val paymentType: PaymentType,
-    val paymentRecurrence: PaymentRecurrence?,
+    val recurrence: PaymentRecurrence?,
     val amount: Double,
     val description: String,
     val expenseType: ExpenseType,

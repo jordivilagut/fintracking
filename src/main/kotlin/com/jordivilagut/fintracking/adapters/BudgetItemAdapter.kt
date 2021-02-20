@@ -18,7 +18,7 @@ class BudgetItemAdapter {
                 description = item.description,
                 expenseType = item.expenseType,
                 paymentType = item.paymentType,
-                paymentRecurrence = item.paymentRecurrence)
+                recurrence = item.recurrence)
         }
 
         fun toItem(dto: CreateBudgetItemDTO, userId: String): BudgetItem {
@@ -32,7 +32,7 @@ class BudgetItemAdapter {
                 operationType = dto.operationType,
                 expenseType = dto.expenseType,
                 paymentType = dto.paymentType,
-                paymentRecurrence = dto.paymentRecurrence)
+                recurrence = dto.recurrence)
         }
 
         private fun negative(amount: Double) = 0 - amount

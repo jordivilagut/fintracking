@@ -8,4 +8,4 @@ class BudgetItemDTO(
     val description: String,
     val expenseType: ExpenseType,
     val paymentType: PaymentType,
-    val paymentRecurrence: PaymentRecurrence?)
+    val recurrence: PaymentRecurrence?)
