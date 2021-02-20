@@ -17,6 +17,8 @@ interface BudgetItemService {
 
     fun addBudgetItem(item: BudgetItem): BudgetItem
 
+    fun updateBudgetItem(id: String, item: BudgetItem): BudgetItem
+
     fun deleteBudgetItem(itemId: String)
 
     class Filter : BaseFilter() {

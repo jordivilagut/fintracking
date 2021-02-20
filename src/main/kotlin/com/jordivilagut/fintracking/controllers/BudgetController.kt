@@ -18,5 +18,7 @@ interface BudgetController {
 
     fun addBudgetItem(user: User, dto: CreateBudgetItemDTO): Response<Any>
 
+    fun updateBudgetItem(user: User, id: String, dto: CreateBudgetItemDTO): Response<Any>
+
     fun deleteBudgetItem(user: User, id: String): Response<Any>
 }

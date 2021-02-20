@@ -37,6 +37,11 @@ class BudgetItemServiceImpl
         return budgetItemRepository.save(item)
     }
 
+    override fun updateBudgetItem(id: String, item: BudgetItem): BudgetItem {
+        item.id = toId(id)
+        return budgetItemRepository.save(item)
+    }
+
     override fun deleteBudgetItem(itemId: String) {
         val item = get(itemId)?: throw IllegalArgumentException("Budget Item not found")
         return budgetItemRepository.delete(item)

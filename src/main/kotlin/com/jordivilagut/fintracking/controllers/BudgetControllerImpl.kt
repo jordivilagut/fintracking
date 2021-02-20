@@ -57,6 +57,18 @@ class BudgetControllerImpl
         return Response(null, NO_CONTENT)
     }
 
+    @PostMapping("{id}")
+    override fun updateBudgetItem(
+        @AuthenticationPrincipal user: User,
+        @PathVariable id: String,
+        @RequestBody dto: CreateBudgetItemDTO): Response<Any> {
+
+        //validateItem()
+        val item = BudgetItemAdapter.toItem(dto, user.idStr())
+        budgetItemService.updateBudgetItem(id, item)
+        return Response(null, NO_CONTENT)
+    }
+
     @DeleteMapping("{id}")
     override fun deleteBudgetItem(
         @AuthenticationPrincipal user: User,
