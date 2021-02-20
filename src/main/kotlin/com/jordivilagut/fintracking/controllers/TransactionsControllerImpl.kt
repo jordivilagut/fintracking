@@ -1,6 +1,6 @@
 package com.jordivilagut.fintracking.controllers
 
-import com.jordivilagut.fintracking.adapters.TransactionAdapter
+import com.jordivilagut.fintracking.adapters.TransactionAdapter.Companion.toDTO
 import com.jordivilagut.fintracking.adapters.TransactionAdapter.Companion.toTransaction
 import com.jordivilagut.fintracking.adapters.TransactionsFilterAdapter.Companion.toServiceFilter
 import com.jordivilagut.fintracking.base.Response
@@ -26,6 +26,15 @@ class TransactionsControllerImpl
 
     : TransactionsController {
 
+    @GetMapping("{id}")
+    override fun getTransaction(
+        @AuthenticationPrincipal user: User,
+        @PathVariable id: String): Response<TransactionDTO> {
+
+        val item = transactionService.get(id)?: throw IllegalArgumentException("Not found")
+        return Response(toDTO(item), OK)
+    }
+
     @PostMapping
     override fun getTransactions(
         @AuthenticationPrincipal user: User,
@@ -33,7 +42,7 @@ class TransactionsControllerImpl
 
         val transactions = transactionService
             .findByFilter(toServiceFilter(filter, user.idStr()))
-            .map { TransactionAdapter.toDTO(it) }
+            .map { toDTO(it) }
 
         return Response(transactions, OK)
     }
@@ -49,12 +58,12 @@ class TransactionsControllerImpl
         return Response(null, NO_CONTENT)
     }
 
-    @DeleteMapping("{transactionId}")
+    @DeleteMapping("{id}")
     override fun deleteTransaction(
         @AuthenticationPrincipal user: User,
-        @PathVariable transactionId: String): Response<Any> {
+        @PathVariable id: String): Response<Any> {
 
-        transactionService.deleteTransaction(transactionId)
+        transactionService.deleteTransaction(id)
         return Response(null, NO_CONTENT)
     }
 }

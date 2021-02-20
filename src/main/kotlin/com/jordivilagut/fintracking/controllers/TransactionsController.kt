@@ -12,9 +12,11 @@ interface TransactionsController {
         const val PATH = "transactions"
     }
 
+    fun getTransaction(user: User, id: String): Response<TransactionDTO>
+
     fun getTransactions(user: User, filter: TransactionsFilter): Response<List<TransactionDTO>>
 
     fun addTransaction(user: User, dto: CreateTransactionDTO): Response<Any>
 
-    fun deleteTransaction(user: User, transactionId: String): Response<Any>
+    fun deleteTransaction(user: User, id: String): Response<Any>
 }
