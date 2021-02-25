@@ -2,7 +2,10 @@ package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.model.Transaction
+import com.jordivilagut.fintracking.model.dto.MonthSummary
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
+import com.jordivilagut.fintracking.model.dto.Months
+import com.jordivilagut.fintracking.model.dto.YearSummary
 import com.jordivilagut.fintracking.repositories.balancestatements.BalanceStatementRepository
 import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,15 +18,23 @@ class FinanceServiceImpl
     @Autowired
     constructor(
         private val transactionService: TransactionService,
-        private val balanceStatementRepository: BalanceStatementRepository)
+        private val balanceStatementRepository: BalanceStatementRepository): FinanceService {
 
-    : FinanceService {
+    override fun getYearSummary(userId: String, year: Int): YearSummary {
+        val months = Months.values().map {
+            MonthSummary(it.name.substring(0, 3),
+                getMonthlySummary(userId, it.ordinal + 1, year).income,
+                getMonthlySummary(userId, it.ordinal + 1, year).expenses)
+        }
 
-    override fun getMonthlySummary(userId: String): MonthlySummary {
+        return YearSummary(months)
+    }
+
+    override fun getMonthlySummary(userId: String, month: Int, year: Int): MonthlySummary {
         val filter = TransactionService.Filter.transactionFilter {
             this.userId = userId
-            this.from = DateTime().withDayOfMonth(1).withTimeAtStartOfDay().toDate()
-            this.to = DateTime().withDayOfMonth(1).plusMonths(1).withTimeAtStartOfDay().toDate()
+            this.from = DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(1).withTimeAtStartOfDay().toDate()
+            this.to = DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(1).plusMonths(1).withTimeAtStartOfDay().toDate()
         }
 
         val transactions = transactionService.findByFilter(filter)

@@ -5,10 +5,11 @@ import com.jordivilagut.fintracking.controllers.FinanceController.Companion.PATH
 import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.model.User
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
+import com.jordivilagut.fintracking.model.dto.YearSummary
 import com.jordivilagut.fintracking.services.FinanceService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.NO_CONTENT
+import org.springframework.http.HttpStatus.OK
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -23,12 +24,23 @@ class FinanceControllerImpl
 
     : FinanceController {
 
-    @GetMapping
+    @GetMapping("year/{year}/month/{month}")
     override fun getMonthlySummary(
-        @AuthenticationPrincipal user: User): Response<MonthlySummary> {
+        @AuthenticationPrincipal user: User,
+        @PathVariable year: Int,
+        @PathVariable month: Int): Response<MonthlySummary> {
 
-        val summary = financeService.getMonthlySummary(user.idStr())
-        return Response(summary, HttpStatus.OK)
+        val summary = financeService.getMonthlySummary(user.idStr(), month, year)
+        return Response(summary, OK)
+    }
+
+    @GetMapping("year/{year}")
+    override fun getYearSummary(
+        @AuthenticationPrincipal user: User,
+        @PathVariable year: Int): Response<YearSummary> {
+
+        val summary = financeService.getYearSummary(user.idStr(), year)
+        return Response(summary, OK)
     }
 
     @GetMapping("balance")
@@ -36,7 +48,7 @@ class FinanceControllerImpl
         @AuthenticationPrincipal user: User): Response<Double?> {
 
         val balance = financeService.getCurrentFunds(user.idStr())
-        return Response(balance, HttpStatus.OK)
+        return Response(balance, OK)
     }
 
     @PostMapping("balance")

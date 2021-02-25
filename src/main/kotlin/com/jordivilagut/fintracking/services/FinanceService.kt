@@ -2,10 +2,13 @@ package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.model.BalanceStatement
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
+import com.jordivilagut.fintracking.model.dto.YearSummary
 
 interface FinanceService {
 
-    fun getMonthlySummary(userId: String): MonthlySummary
+    fun getYearSummary(userId: String, year: Int): YearSummary
+
+    fun getMonthlySummary(userId: String, month: Int, year: Int): MonthlySummary
 
     fun getCurrentFunds(userId: String): Double?
 
