@@ -9,18 +9,18 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
-@Document("transactions")
-class Transaction(
-        @Id var id: ObjectId?,
-        val userId: ObjectId,
-        val date: Date,
-        val amount: Double,
-        val description: String,
-        val expenseType: ExpenseType,
-        val operationType: OperationType,
-        val budgetTransactionId: ObjectId?) {
+@Document("budgetTransactions")
+class BudgetTransaction(
+    @Id var id: ObjectId?,
+    val userId: ObjectId,
+    val date: Date,
+    val amount: Double,
+    val description: String,
+    val expenseType: ExpenseType,
+    val operationType: OperationType,
+    val budgetItemId: ObjectId?) {
 
-        fun isExpense() = operationType == EXPENSE
+    fun isExpense() = operationType == EXPENSE
 
-        fun isIncome() = operationType == INCOME
+    fun isIncome() = operationType == INCOME
 }
