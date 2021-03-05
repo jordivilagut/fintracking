@@ -38,8 +38,13 @@ class TransactionServiceImpl
         return transactionRepository.save(transaction)
     }
 
-    override fun deleteTransaction(transactionId: String) {
-        val transaction = get(transactionId)?: throw IllegalArgumentException("Transaction not found")
+    override fun updateTransaction(id: String, transaction: Transaction): Transaction {
+        transaction.id = toId(id)
+        return transactionRepository.save(transaction)
+    }
+
+    override fun deleteTransaction(id: String) {
+        val transaction = get(id)?: throw IllegalArgumentException("Transaction not found")
         return transactionRepository.delete(transaction)
     }
 

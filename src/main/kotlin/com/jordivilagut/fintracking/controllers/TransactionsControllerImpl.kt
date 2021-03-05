@@ -58,6 +58,18 @@ class TransactionsControllerImpl
         return Response(null, NO_CONTENT)
     }
 
+    @PostMapping("{id}")
+    override fun updateTransactions(
+        @AuthenticationPrincipal user: User,
+        @PathVariable id: String,
+        @RequestBody dto: CreateTransactionDTO): Response<Any> {
+
+        //validateTransactionDTO()
+        val transaction = toTransaction(dto, user.idStr())
+        transactionService.updateTransaction(id, transaction)
+        return Response(null, NO_CONTENT)
+    }
+
     @DeleteMapping("{id}")
     override fun deleteTransaction(
         @AuthenticationPrincipal user: User,

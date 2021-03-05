@@ -18,5 +18,7 @@ interface TransactionsController {
 
     fun addTransaction(user: User, dto: CreateTransactionDTO): Response<Any>
 
+    fun updateTransactions(user: User, id: String, dto: CreateTransactionDTO): Response<Any>
+
     fun deleteTransaction(user: User, id: String): Response<Any>
 }

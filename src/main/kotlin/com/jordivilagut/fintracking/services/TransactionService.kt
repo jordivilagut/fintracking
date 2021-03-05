@@ -17,6 +17,8 @@ interface TransactionService {
 
     fun addTransaction(transaction: Transaction): Transaction
 
+    fun updateTransaction(id: String, transaction: Transaction): Transaction
+
     fun deleteTransaction(transactionId: String)
 
     class Filter : BaseFilter() {
