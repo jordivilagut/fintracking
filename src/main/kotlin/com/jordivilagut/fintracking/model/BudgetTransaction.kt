@@ -9,7 +9,7 @@ import java.util.*
 
 @Document("budgetTransactions")
 class BudgetTransaction(
-    @Id val id: ObjectId?,
+    @Id var id: ObjectId?,
     val userId: ObjectId,
     val date: Date,
     amount: Double,

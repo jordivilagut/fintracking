@@ -9,7 +9,7 @@ import java.util.*
 
 @Document("transactions")
 class Transaction(
-        @Id val id: ObjectId?,
+        @Id var id: ObjectId?,
         val userId: ObjectId,
         val date: Date,
         amount: Double,
