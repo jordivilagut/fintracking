@@ -1,6 +1,7 @@
 package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.base.BaseFilter
+import com.jordivilagut.fintracking.model.BudgetItem
 import com.jordivilagut.fintracking.model.BudgetTransaction
 import java.util.*
 import java.util.function.Consumer
@@ -19,17 +20,20 @@ interface BudgetTransactionService {
 
     fun deleteTransaction(id: String)
 
+    fun deleteBudgetTransactions(itemId: String)
+
+    fun generateTransactions(item: BudgetItem)
+
     class Filter : BaseFilter() {
 
         var userId: String? = null
-        var from: Date = Date()
-        var to: Date = Date()
+        var from: Date? = null
+        var to: Date? = null
+        var budgetItemId: String? = null
 
         companion object {
             /** Convenience method to build [Filter] */
             fun transactionFilter(f: Filter.() -> Unit) = Filter().apply(f)
-            /** Convenience method to build [Filter] from Java */
-            fun transactionFilter(f: Consumer<Filter>) = Filter().apply { f.accept(this) }
         }
     }
 }

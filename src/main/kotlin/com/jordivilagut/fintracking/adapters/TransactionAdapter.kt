@@ -27,7 +27,7 @@ class TransactionAdapter {
                 description = dto.description,
                 operationType = dto.operationType,
                 expenseType = dto.expenseType,
-                budgetItemId = null)
+                budgetTransactionId = null)
         }
 
         private fun negative(amount: Double) = 0 - amount

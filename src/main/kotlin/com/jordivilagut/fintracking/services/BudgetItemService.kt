@@ -19,7 +19,7 @@ interface BudgetItemService {
 
     fun updateBudgetItem(id: String, item: BudgetItem): BudgetItem
 
-    fun deleteBudgetItem(itemId: String)
+    fun deleteBudgetItem(id: String)
 
     class Filter : BaseFilter() {
 
@@ -30,8 +30,6 @@ interface BudgetItemService {
         companion object {
             /** Convenience method to build [Filter] */
             fun budgetItemsFilter(f: Filter.() -> Unit) = Filter().apply(f)
-            /** Convenience method to build [Filter] from Java */
-            fun budgetItemsFilter(f: Consumer<Filter>) = Filter().apply { f.accept(this) }
         }
     }
 }

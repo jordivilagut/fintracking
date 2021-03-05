@@ -14,8 +14,8 @@ class BudgetItemServiceImpl
 
     @Autowired
     constructor(
-        val budgetItemRepository: BudgetItemRepository
-    ): BudgetItemService {
+        val budgetTransactionService: BudgetTransactionService,
+        val budgetItemRepository: BudgetItemRepository): BudgetItemService {
 
     override fun get(id: String): BudgetItem? {
         return budgetItemRepository.findById(toId(id)).orElse(null)
@@ -34,17 +34,23 @@ class BudgetItemServiceImpl
     }
 
     override fun addBudgetItem(item: BudgetItem): BudgetItem {
-        return budgetItemRepository.save(item)
+        val saved = budgetItemRepository.save(item)
+        budgetTransactionService.generateTransactions(saved.clone())
+        return saved
     }
 
     override fun updateBudgetItem(id: String, item: BudgetItem): BudgetItem {
         item.id = toId(id)
-        return budgetItemRepository.save(item)
+        val saved = budgetItemRepository.save(item)
+        budgetTransactionService.deleteBudgetTransactions(id)
+        budgetTransactionService.generateTransactions(saved.clone())
+        return saved
     }
 
-    override fun deleteBudgetItem(itemId: String) {
-        val item = get(itemId)?: throw IllegalArgumentException("Budget Item not found")
-        return budgetItemRepository.delete(item)
+    override fun deleteBudgetItem(id: String) {
+        val item = get(id)?: throw IllegalArgumentException("Budget Item not found")
+        budgetItemRepository.delete(item)
+        budgetTransactionService.deleteBudgetTransactions(id)
     }
 
     private fun queryFromFilter(filter: BudgetItemService.Filter): Query {

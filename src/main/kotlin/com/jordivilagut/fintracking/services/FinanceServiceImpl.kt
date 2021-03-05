@@ -1,7 +1,7 @@
 package com.jordivilagut.fintracking.services
 
 import com.jordivilagut.fintracking.model.BalanceStatement
-import com.jordivilagut.fintracking.model.Transaction
+import com.jordivilagut.fintracking.model.BaseTransaction
 import com.jordivilagut.fintracking.model.dto.MonthSummary
 import com.jordivilagut.fintracking.model.dto.MonthlySummary
 import com.jordivilagut.fintracking.model.dto.Months
@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.math.abs
 
 @Service
 class FinanceServiceImpl
@@ -18,16 +19,36 @@ class FinanceServiceImpl
     @Autowired
     constructor(
         private val transactionService: TransactionService,
+        private val budgetTransactionService: BudgetTransactionService,
         private val balanceStatementRepository: BalanceStatementRepository): FinanceService {
 
     override fun getYearSummary(userId: String, year: Int): YearSummary {
         val months = Months.values().map {
+            //TODO - Months enum start with 1
+            val monthlySummary = getMonthlySummary(userId, it.ordinal + 1, year)
+            val budgetMonthlySummary = getMonthlyBudgetSummary(userId, it.ordinal + 1, year)
             MonthSummary(it.name.substring(0, 3),
-                getMonthlySummary(userId, it.ordinal + 1, year).income,
-                getMonthlySummary(userId, it.ordinal + 1, year).expenses)
+                monthlySummary.income,
+                monthlySummary.expenses,
+                budgetMonthlySummary.income,
+                budgetMonthlySummary.expenses)
         }
 
         return YearSummary(months)
+    }
+
+    private fun getMonthlyBudgetSummary(userId: String, month: Int, year: Int): MonthlySummary {
+        val filter = BudgetTransactionService.Filter.transactionFilter {
+            this.userId = userId
+            this.from = DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(1).withTimeAtStartOfDay().toDate()
+            this.to = DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(1).plusMonths(1).withTimeAtStartOfDay().toDate()
+        }
+
+        val transactions = budgetTransactionService.findByFilter(filter)
+        val income = getTotalIncome(transactions)
+        val expenses = getTotalExpenses(transactions)
+
+        return MonthlySummary(income, expenses, income - expenses)
     }
 
     override fun getMonthlySummary(userId: String, month: Int, year: Int): MonthlySummary {
@@ -64,17 +85,17 @@ class FinanceServiceImpl
         balanceStatementRepository.save(balanceStatement)
     }
 
-    private fun getTotalIncome(transactions: List<Transaction>): Double {
+    private fun getTotalIncome(transactions: List<BaseTransaction>): Double {
         return transactions
             .filter { it.isIncome() }
-            .map { it.amount }
+            .map { abs(it.amount) }
             .sum()
     }
 
-    private fun getTotalExpenses(transactions: List<Transaction>): Double {
-        return -transactions
+    private fun getTotalExpenses(transactions: List<BaseTransaction>): Double {
+        return transactions
             .filter { it.isExpense() }
-            .map { it.amount }
+            .map { abs(it.amount) }
             .sum()
     }
 }
