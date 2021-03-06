@@ -30,10 +30,10 @@ class FinanceServiceImpl
             val monthlySummary = getMonthlySummary(userId, it.ordinal + 1, year)
             val budgetMonthlySummary = getMonthlyBudgetSummary(userId, it.ordinal + 1, year)
             MonthSummary(it.name.substring(0, 3),
-                monthlySummary.income,
-                monthlySummary.expenses,
-                budgetMonthlySummary.income,
-                budgetMonthlySummary.expenses)
+                round2Dec(abs(monthlySummary.income)),
+                round2Dec(abs(monthlySummary.expenses)),
+                round2Dec(abs(budgetMonthlySummary.income)),
+                round2Dec(abs(budgetMonthlySummary.expenses)))
         }
 
         return YearSummary(months)
@@ -61,8 +61,8 @@ class FinanceServiceImpl
         }
 
         val transactions = transactionService.findByFilter(filter)
-        val income = getTotalIncome(transactions)
-        val expenses = getTotalExpenses(transactions)
+        val income = round2Dec(abs(getTotalIncome(transactions)))
+        val expenses = round2Dec(abs(getTotalExpenses(transactions)))
 
         return MonthlySummary(income, expenses, income - expenses)
     }
