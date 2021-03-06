@@ -23,6 +23,7 @@ class BudgetItemAdapter {
                 end = item.end?.time,
                 amount = abs(item.amount),
                 description = item.description,
+                operationType = item.operationType,
                 expenseType = item.expenseType,
                 paymentType = item.paymentType,
                 recurrence = item.recurrence)

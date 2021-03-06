@@ -6,6 +6,7 @@ class BudgetItemDTO(
     val end: Long?,
     val amount: Number,
     val description: String,
+    val operationType: OperationType,
     val expenseType: ExpenseType,
     val paymentType: PaymentType,
     val recurrence: PaymentRecurrence?)

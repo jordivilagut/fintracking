@@ -5,4 +5,5 @@ class TransactionDTO(
         val date: Long,
         val amount: Number,
         val description: String,
+        val operationType: OperationType,
         val expenseType: ExpenseType)
