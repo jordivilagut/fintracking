@@ -5,6 +5,7 @@ import com.jordivilagut.fintracking.model.dto.CreateTransactionDTO
 import com.jordivilagut.fintracking.model.dto.TransactionDTO
 import com.jordivilagut.fintracking.utils.MongoUtils.Companion.toId
 import java.util.*
+import kotlin.math.abs
 
 class TransactionAdapter {
 
@@ -13,7 +14,7 @@ class TransactionAdapter {
             return TransactionDTO(
                 id = transaction.id.toString(),
                 date = transaction.date.time,
-                amount = transaction.amount,
+                amount = abs(transaction.amount),
                 description = transaction.description,
                 operationType = transaction.operationType,
                 expenseType = transaction.expenseType)
