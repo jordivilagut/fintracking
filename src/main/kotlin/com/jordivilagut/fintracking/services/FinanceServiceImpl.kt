@@ -8,6 +8,7 @@ import com.jordivilagut.fintracking.model.dto.Months
 import com.jordivilagut.fintracking.model.dto.YearSummary
 import com.jordivilagut.fintracking.repositories.balancestatements.BalanceStatementRepository
 import com.jordivilagut.fintracking.utils.MathUtil.Companion.round2Dec
+import org.apache.http.client.utils.DateUtils
 import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -71,7 +72,7 @@ class FinanceServiceImpl
         val filter = TransactionService.Filter.transactionFilter {
             this.userId = userId
             this.from = latestStatement.date
-            this.to = Date()
+            this.to = DateTime().withTimeAtStartOfDay().plusDays(1).toDate() //Date at the end of today
         }
 
         val transactionsSinceLatestStatement = transactionService.findByFilter(filter)
