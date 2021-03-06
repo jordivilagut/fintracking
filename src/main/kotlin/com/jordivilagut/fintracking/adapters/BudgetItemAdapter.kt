@@ -6,6 +6,8 @@ import com.jordivilagut.fintracking.model.dto.BudgetItemDTO
 import com.jordivilagut.fintracking.model.dto.CreateBudgetItemDTO
 import com.jordivilagut.fintracking.model.dto.PaymentRecurrence.MONTHLY
 import com.jordivilagut.fintracking.model.dto.PaymentRecurrence.WEEKLY
+import com.jordivilagut.fintracking.utils.MathUtil.Companion.negative
+import com.jordivilagut.fintracking.utils.MathUtil.Companion.round2Dec
 import com.jordivilagut.fintracking.utils.MongoUtils
 import org.joda.time.DateTime
 import org.joda.time.Months
@@ -21,7 +23,7 @@ class BudgetItemAdapter {
                 id = item.id.toString(),
                 start = item.start.time,
                 end = item.end?.time,
-                amount = abs(item.amount),
+                amount = round2Dec(abs(item.amount)),
                 description = item.description,
                 operationType = item.operationType,
                 expenseType = item.expenseType,
@@ -35,7 +37,7 @@ class BudgetItemAdapter {
                 start = Date(dto.start),
                 end = if (dto.end != null) Date(dto.end) else null,
                 userId = MongoUtils.toId(userId),
-                amount = if (dto.isExpense()) negative(dto.amount) else dto.amount,
+                amount = if (dto.isExpense()) negative(round2Dec(dto.amount)) else round2Dec(dto.amount),
                 description = dto.description,
                 operationType = dto.operationType,
                 expenseType = dto.expenseType,
@@ -85,7 +87,5 @@ class BudgetItemAdapter {
             expenseType = item.expenseType,
             operationType = item.operationType,
             budgetItemId = item.id)
-
-        private fun negative(amount: Double) = 0 - amount
     }
 }

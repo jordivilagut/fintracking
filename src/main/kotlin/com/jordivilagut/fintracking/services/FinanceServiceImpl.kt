@@ -7,6 +7,7 @@ import com.jordivilagut.fintracking.model.dto.MonthlySummary
 import com.jordivilagut.fintracking.model.dto.Months
 import com.jordivilagut.fintracking.model.dto.YearSummary
 import com.jordivilagut.fintracking.repositories.balancestatements.BalanceStatementRepository
+import com.jordivilagut.fintracking.utils.MathUtil.Companion.round2Dec
 import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -74,7 +75,7 @@ class FinanceServiceImpl
         }
 
         val transactionsSinceLatestStatement = transactionService.findByFilter(filter)
-        return latestStatement.balance + transactionsSinceLatestStatement.map { it.amount }.sum()
+        return round2Dec(latestStatement.balance + transactionsSinceLatestStatement.map { it.amount }.sum())
     }
 
     override fun getLatestStatement(userId: String): BalanceStatement? {
