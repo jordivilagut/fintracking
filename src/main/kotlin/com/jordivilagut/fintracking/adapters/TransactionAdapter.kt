@@ -16,7 +16,7 @@ class TransactionAdapter {
         fun toDTO(transaction: Transaction): TransactionDTO {
             return TransactionDTO(
                 id = transaction.id.toString(),
-                date = transaction.date,
+                date = transaction.date.time,
                 amount = round2Dec(abs(transaction.amount)),
                 description = transaction.description,
                 operationType = transaction.operationType,
@@ -26,7 +26,7 @@ class TransactionAdapter {
         fun toTransaction(dto: CreateTransactionDTO, userId: String): Transaction {
             return Transaction(
                 id = null,
-                date = Date(), //Use UTC
+                date = Date(dto.date),
                 userId = toId(userId),
                 amount = if (dto.isExpense()) negative(round2Dec(dto.amount)) else round2Dec(dto.amount),
                 description = dto.description,
